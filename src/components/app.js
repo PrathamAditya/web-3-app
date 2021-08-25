@@ -1,21 +1,33 @@
 import ReactDOM from "react-dom";
 import React from "react";
 
-class App extends React.Component{
-  constructor(props){
+class App extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {}
+    this.authFunc = this.authFunc.bind(this);
   }
-  render(){
-    return (
-      <div className = "container">
-        <input type="submit" className="btn btn-primary" value="Alert" onClick={() => {alert("pressed");}}/>
-      </div>
-    )
+  authFunc() {
+    const authData = {
+      data: "Auth on my site"
+    };
+    if (WavesKeeper) {
+      WavesKeeper.auth(authData).then(auth => {
+        console.log(auth);
+      }).catch(error => {
+        console.error(error);
+      })
+    } else {
+      alert("To auth WavesKeeper Should be installed.");
+    }
+  }
+  render() {
+    return (<div className="container">
+      <input type="submit" className="btn btn-primary" value="Auth" onClick={this.authFunc}/>
+    </div>)
   }
 }
 const app = document.getElementById('app');
-if(app)
-{
-  ReactDOM.render(<App/>,app);
+if (app) {
+  ReactDOM.render(<App/>, app);
 }
